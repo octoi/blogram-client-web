@@ -10,7 +10,7 @@ export default function Header() {
 	const { user, searchQuery, setSearchQuery } = useAppContext();
 
 	return (
-		<Flex mt={5} justifyContent="space-between" alignItems="center" width="100%">
+		<Flex mt={5} mb={10} justifyContent="space-between" alignItems="center" width="100%">
 			<Link href="/" passHref>
 				<Text cursor="pointer" fontSize="2xl" fontWeight="normal">Blogram</Text>
 			</Link>
