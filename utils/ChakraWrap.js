@@ -1,4 +1,4 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme, Container } from '@chakra-ui/react';
 
 const theme = extendTheme({
 	config: {
@@ -10,7 +10,9 @@ const theme = extendTheme({
 export default function ChakraWrap({ children }) {
 	return (
 		<ChakraProvider theme={theme}>
-			{children}
+			<Container maxW="8xl">
+				{children}
+			</Container>
 		</ChakraProvider>
 	);
 }
