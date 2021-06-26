@@ -1,10 +1,14 @@
+import Link from 'next/link';
+import useAppContext from '../../hooks/useAppContext';
 import { Flex, Text, Input, Button } from '@chakra-ui/react';
 import { InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
-import Link from 'next/link';
 import { SearchIcon } from '@chakra-ui/icons';
 
 export default function Header() {
+
+	const { user, searchQuery, setSearchQuery } = useAppContext();
+
 	return (
 		<Flex mt={5} justifyContent="space-between" alignItems="center" width="100%">
 			<Link href="/" passHref>
@@ -17,19 +21,27 @@ export default function Header() {
 				<Input
 					placeholder="Search for blogs ..."
 					variant="filled"
+					value={searchQuery}
+					onChange={(e) => setSearchQuery(e.target.value)}
 				/>
 			</InputGroup>
 			<div>
-				<Menu>
-					<MenuButton as={Button}>
-						username
-					</MenuButton>
-					<MenuList>
-						<Link href="/profile" passHref><MenuItem>Profile</MenuItem></Link>
-						<Link href="/new" passHref><MenuItem>Create</MenuItem></Link>
-						<Link href="/settings" passHref><MenuItem>Settings</MenuItem></Link>
-					</MenuList>
-				</Menu>
+				{user ? (
+					<Menu>
+						<MenuButton as={Button}>
+							{user?.name}
+						</MenuButton>
+						<MenuList>
+							<Link href="/profile" passHref><MenuItem>Profile</MenuItem></Link>
+							<Link href="/new" passHref><MenuItem>Create</MenuItem></Link>
+							<Link href="/settings" passHref><MenuItem>Settings</MenuItem></Link>
+						</MenuList>
+					</Menu>
+				) : (
+					<Link href='/login' passHref>
+						<Button>Login</Button>
+					</Link>
+				)}
 			</div>
 		</Flex>
 	)
