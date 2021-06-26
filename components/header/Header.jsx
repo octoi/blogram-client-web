@@ -1,12 +1,15 @@
 import { Flex, Text, Input, Button } from '@chakra-ui/react';
 import { InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { SearchIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import Link from 'next/link';
+import { SearchIcon } from '@chakra-ui/icons';
 
 export default function Header() {
 	return (
-		<Flex mt={5} justifyContent="space-evenly" width="100%">
-			<Text fontSize="2xl">Blogram</Text>
+		<Flex mt={5} justifyContent="space-between" alignItems="center" width="100%">
+			<Link href="/" passHref>
+				<Text cursor="pointer" fontSize="2xl" fontWeight="normal">Blogram</Text>
+			</Link>
 			<InputGroup ml={2} mr={2}>
 				<InputLeftElement pointerEvents="none">
 					<SearchIcon color="gray.300" />
@@ -22,9 +25,9 @@ export default function Header() {
 						username
 					</MenuButton>
 					<MenuList>
-						<MenuItem>Profile</MenuItem>
-						<MenuItem>New Blog</MenuItem>
-						<MenuItem>Settings</MenuItem>
+						<Link href="/profile" passHref><MenuItem>Profile</MenuItem></Link>
+						<Link href="/new" passHref><MenuItem>Create</MenuItem></Link>
+						<Link href="/settings" passHref><MenuItem>Settings</MenuItem></Link>
 					</MenuList>
 				</Menu>
 			</div>
