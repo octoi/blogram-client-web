@@ -6,6 +6,10 @@ export default function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
+	const login = () => {
+
+	}
+
 	return (
 		<Flex height="80vh" justifyContent="center" alignItems="center">
 			<LoginStyledFlex background="gray.700" p={12} direction="column">
@@ -25,8 +29,8 @@ export default function Login() {
 					type="password"
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<Button mt={5} colorScheme="teal" width="100%">Log In</Button>
-				<Link mt={2}>New to blogram ?? Register</Link>
+				<Button mt={5} colorScheme="teal" width="100%" onClick={login}>Log In</Button>
+				<Link mt={2} href='/register'>New to blogram ?? Register</Link>
 			</LoginStyledFlex>
 		</Flex>
 	)
