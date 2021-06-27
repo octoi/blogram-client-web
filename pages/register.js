@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
+import useAppContext from '../hooks/useAppContext';
+import { useRouter } from 'next/router';
 import { Flex, Button, Heading, Input, Link } from '@chakra-ui/react';
+import { registerUser } from '../api/authentication';
 
 export default function Register() {
 	const [username, setUsername] = useState('');
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
+	const { showToast, setUser } = useAppContext();
+
+	const router = useRouter();
 
 	const register = () => {
+		const userData = { name, username, password }
 
+		registerUser(userData)
+			.catch(err => showToast({ title: err }))
+			.then(data => {
+				setUser(data);
+				showToast({
+					title: 'Registered successfully',
+					description: `You are now ${data.name}`,
+					isSuccess: true,
+				})
+				router.push('/')
+			});
 	}
 
 	return (
@@ -36,7 +54,13 @@ export default function Register() {
 					type="password"
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<Button mt={5} colorScheme="teal" width="100%" onClick={register}>Register</Button>
+				<Button
+					mt={5}
+					colorScheme="teal"
+					width="100%"
+					onClick={register}
+					disabled={username.trim().length === 0 || name.trim().length === 0 || password.trim().length === 0}
+				>Register</Button>
 				<Link mt={2} href='/login'>Already in blogram ?? Login</Link>
 			</Flex>
 		</Flex>
