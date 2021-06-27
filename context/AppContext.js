@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { getUser, saveToken } from '../utils/session';
+import { getUser, saveToken, removeToken } from '../utils/session';
 import { useToast } from '@chakra-ui/react';
 
 export const AppStateContext = createContext();
@@ -32,10 +32,15 @@ export function AppContext({ children }) {
 		});
 	}
 
+	const logout = () => {
+		removeToken();
+		setUser();
+	}
+
 	const globalValues = {
 		user, setUser,
 		searchQuery, setSearchQuery,
-		showToast,
+		showToast, logout
 	}
 
 	return (
