@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useAppContext from '../hooks/useAppContext';
+import { useRouter } from 'next/router';
 import { Flex, Button, Heading, Input, Link } from '@chakra-ui/react';
 import { loginUser } from '../api/authentication';
 
@@ -7,6 +8,8 @@ export default function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const { showToast, setUser } = useAppContext();
+
+	const router = useRouter();
 
 	const login = () => {
 		const userData = { username, password }

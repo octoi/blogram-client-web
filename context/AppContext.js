@@ -1,5 +1,5 @@
-import { createContext, useState } from 'react';
-import { getUser } from '../utils/session';
+import { createContext, useState, useEffect } from 'react';
+import { getUser, saveToken } from '../utils/session';
 import { useToast } from '@chakra-ui/react';
 
 export const AppStateContext = createContext();
@@ -11,7 +11,15 @@ export function AppContext({ children }) {
 	const userFromSession = getUser();
 	const toast = useToast();
 
-	if (userFromSession && userFromSession.token != user.token) setUser(userFromSession);
+
+	useEffect(() => {
+		if (!user?.token) {
+			if (userFromSession && userFromSession.token != user?.token) setUser(userFromSession);
+			return 0;
+		}
+
+		saveToken(user?.token);
+	}, [user, userFromSession])
 
 	const showToast = ({ title, description, isSuccess }) => {
 		toast({
