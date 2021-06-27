@@ -15,17 +15,11 @@ export default function Register() {
 	const register = () => {
 		const userData = { name, username, password }
 
-		registerUser(userData)
-			.catch(err => showToast({ title: err }))
-			.then(data => {
-				setUser(data);
-				showToast({
-					title: 'Registered successfully',
-					description: `You are now ${data.name}`,
-					isSuccess: true,
-				})
-				router.push('/')
-			});
+		registerUser(userData).then(data => {
+			setUser(data);
+			showToast({ title: 'Registered successfully', description: `You are now ${data.name}`, isSuccess: true, })
+			router.push('/')
+		}).catch(err => showToast({ title: err }))
 	}
 
 	return (
