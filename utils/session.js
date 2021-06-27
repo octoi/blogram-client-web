@@ -24,3 +24,7 @@ export function getUser() {
 export function saveToken(token) {
 	cookie.set('token', token);
 }
+
+export function removeToken() {
+	cookie.remove('token');
+}
