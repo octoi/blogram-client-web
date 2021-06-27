@@ -7,7 +7,7 @@ import { SearchIcon } from '@chakra-ui/icons';
 
 export default function Header() {
 
-	const { user, searchQuery, setSearchQuery } = useAppContext();
+	const { user, logout, searchQuery, setSearchQuery } = useAppContext();
 
 	return (
 		<Flex mt={5} mb={10} justifyContent="space-between" alignItems="center" width="100%">
@@ -35,6 +35,7 @@ export default function Header() {
 							<Link href="/profile" passHref><MenuItem>Profile</MenuItem></Link>
 							<Link href="/new" passHref><MenuItem>Create</MenuItem></Link>
 							<Link href="/settings" passHref><MenuItem>Settings</MenuItem></Link>
+							<MenuItem onClick={logout} color="red.300">Logout</MenuItem>
 						</MenuList>
 					</Menu>
 				) : (
