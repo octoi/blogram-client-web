@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Flex, Button, Heading, Input, Link } from '@chakra-ui/react';
-import { LoginStyledFlex } from '../styles/styledComponents';
 
 export default function Login() {
 	const [username, setUsername] = useState('');
@@ -12,7 +11,7 @@ export default function Login() {
 
 	return (
 		<Flex height="80vh" justifyContent="center" alignItems="center">
-			<LoginStyledFlex background="gray.700" p={12} direction="column">
+			<Flex maxW="80%" minW="30%" background="gray.700" p={12} direction="column">
 				<Heading>Log In</Heading>
 				<Input
 					mt={5}
@@ -31,7 +30,7 @@ export default function Login() {
 				/>
 				<Button mt={5} colorScheme="teal" width="100%" onClick={login}>Log In</Button>
 				<Link mt={2} href='/register'>New to blogram ?? Register</Link>
-			</LoginStyledFlex>
+			</Flex>
 		</Flex>
 	)
 }
