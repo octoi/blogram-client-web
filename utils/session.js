@@ -4,9 +4,9 @@ import cookie from "js-cookie";
 export function decodeToken(token) {
 	const decodedData = jwtDecode(token);
 
-	if (decodeToken.exp * 1000 < Date.now()) return false;
+	if (decodedData.exp * 1000 < Date.now()) return false;
 
-	return decodeToken;
+	return decodedData;
 }
 
 export function getUser() {
@@ -19,4 +19,8 @@ export function getUser() {
 	if (!decodedData) cookie.remove("token");
 
 	return { ...decodedData, token };
+}
+
+export function saveToken(token) {
+	cookie.set('token', token);
 }

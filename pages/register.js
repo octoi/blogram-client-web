@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import useAppContext from '../hooks/useAppContext';
 import { useRouter } from 'next/router';
 import { Flex, Button, Heading, Input, Link } from '@chakra-ui/react';
-import { loginUser } from '../api/authentication';
+import { registerUser } from '../api/authentication';
 
-export default function Login() {
+export default function Register() {
 	const [username, setUsername] = useState('');
+	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const { showToast, setUser } = useAppContext();
 
 	const router = useRouter();
 
-	const login = () => {
-		const userData = { username, password }
+	const register = () => {
+		const userData = { name, username, password }
 
-		loginUser(userData).then(data => {
+		registerUser(userData).then(data => {
 			setUser(data);
-			showToast({ title: 'Logged in successfully', description: `You are now ${data.name}`, isSuccess: true, })
+			showToast({ title: 'Registered successfully', description: `You are now ${data.name}`, isSuccess: true, })
 			router.push('/')
 		}).catch(err => showToast({ title: err }))
 	}
@@ -24,7 +25,14 @@ export default function Login() {
 	return (
 		<Flex height="80vh" justifyContent="center" alignItems="center">
 			<Flex maxW="80%" minW="30%" background="gray.700" p={12} direction="column">
-				<Heading>Log In</Heading>
+				<Heading>Register</Heading>
+				<Input
+					mt={5}
+					placeholder="name"
+					variant="filled"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
+				/>
 				<Input
 					mt={5}
 					placeholder="username"
@@ -44,10 +52,10 @@ export default function Login() {
 					mt={5}
 					colorScheme="teal"
 					width="100%"
-					onClick={login}
-					disabled={username.trim().length === 0 || password.length === 0}
-				>Log In</Button>
-				<Link mt={2} href='/register'>New to blogram ?? Register</Link>
+					onClick={register}
+					disabled={username.trim().length === 0 || name.trim().length === 0 || password.trim().length === 0}
+				>Register</Button>
+				<Link mt={2} href='/login'>Already in blogram ?? Login</Link>
 			</Flex>
 		</Flex>
 	)
