@@ -5,12 +5,12 @@ import { AppContext } from '../context/AppContext';
 
 function MyApp({ Component, pageProps }) {
     return (
-        <AppContext>
-            <ChakraWrap>
+        <ChakraWrap>
+            <AppContext>
                 <Header />
                 <Component {...pageProps} />
-            </ChakraWrap>
-        </AppContext>
+            </AppContext>
+        </ChakraWrap>
     );
 }
 
