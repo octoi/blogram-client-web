@@ -7,6 +7,6 @@ export const HomeBlogContainer = styled(Flex)`
 	transition: 0.3s;
 
 	&:hover {
-		opacity: 0.3;
+		background: var(--chakra-colors-whiteAlpha-200);
 	}
 `
