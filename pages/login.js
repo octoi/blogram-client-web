@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useAppContext from '../hooks/useAppContext';
 import AuthDenied from '../utils/AuthDenied';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Flex, Button, Heading, Input, Link } from '@chakra-ui/react';
 import { loginUser } from '../api/authentication';
@@ -24,6 +25,10 @@ export default function Login() {
 
 	return (
 		<AuthDenied>
+			<Head>
+				<title>Login</title>
+				<meta name="description" content="login to blogram" />
+			</Head>
 			<Flex height="80vh" justifyContent="center" alignItems="center">
 				<Flex maxW="80%" minW="30%" background="gray.700" p={12} direction="column">
 					<Heading>Log In</Heading>
