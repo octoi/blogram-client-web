@@ -45,3 +45,18 @@ export function fetchOneBlog(id) {
 		}).catch(() => reject("Failed to fetch data"))
 	});
 }
+
+export function deleteBlog(userData, id) {
+	return new Promise((resolve, reject) => {
+		const route = `${blogRoute}/${id}`;
+
+		axios.delete(route, { data: userData }).then(res => {
+
+			const data = res.data;
+
+			if (data?.status === 200) { resolve(data?.message) }
+			else { reject(data?.message); }
+
+		}).catch(() => reject("Failed to delete blog"))
+	});
+}
