@@ -6,8 +6,9 @@ export const HomeBlogContainer = styled(Flex)`
 	cursor: pointer;
 	transition: 0.3s;
 	flex-direction: column;
+	border: 2px dotted #2D3748;
 
 	&:hover {
-		background: var(--chakra-colors-whiteAlpha-200);
+		background: #2D3748;
 	}
 `
