@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useAppContext from '../../hooks/useAppContext';
+import AuthProtected from '../../utils/AuthProtected';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { getUserData } from '../../api/user'
@@ -12,7 +13,7 @@ export default function Blog() {
 	const router = useRouter();
 
 	const { id } = router.query;
-	const { showToast } = useAppContext();
+	const { user, showToast } = useAppContext();
 
 	useEffect(() => {
 		fetchOneBlog(id).then(blog => {
@@ -22,22 +23,28 @@ export default function Blog() {
 	}, [id, showToast]);
 
 	return (
-		<Flex direction="column" mb={5}>
-			{blog && (
-				<Flex direction="column">
-					<Heading>{blog?.title}</Heading>
-					<Text mt={5} opacity="0.8" fontSize="xl">{moment(parseInt(blog?.createdAt)).fromNow()}</Text>
-					<Text fontSize="xl" opacity="0.5" mt={5}>{`${blog?.blog} ...`}</Text>
-					{author && (
-						<Flex mt={5} direction="column">
-							<Link href={`/user/${author?.id}`}>
-								<Text opacity="0.8" fontSize="xl">Written by {author?.name}</Text>
-							</Link>
-							<Button mt={5} width="100%" variant="outline">Delete Blog</Button>
-						</Flex>
-					)}
-				</Flex>
-			)}
-		</Flex>
+		<AuthProtected>
+			<Flex direction="column" mb={5}>
+				{blog && (
+					<Flex direction="column">
+						<Heading>{blog?.title}</Heading>
+						<Text mt={5} opacity="0.8" fontSize="xl">{moment(parseInt(blog?.createdAt)).fromNow()}</Text>
+						<Text fontSize="xl" opacity="0.5" mt={5}>{`${blog?.blog} ...`}</Text>
+						{author && (
+							<Flex mt={5} direction="column">
+								<Link href={`/user/${author?.id}`}>
+									<Text opacity="0.8" fontSize="xl">Written by {author?.name}</Text>
+								</Link>
+								{user?.username === author?.username && <Button
+									mt={5}
+									width="100%"
+									variant="outline"
+								>Delete Blog</Button>}
+							</Flex>
+						)}
+					</Flex>
+				)}
+			</Flex>
+		</AuthProtected>
 	)
 }
