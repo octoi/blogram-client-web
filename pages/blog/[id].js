@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { getUserData } from '../../api/user'
 import { fetchOneBlog } from '../../api/blog';
-import { Flex, Heading, Text, Link } from '@chakra-ui/react';
+import { Flex, Heading, Text, Link, Button } from '@chakra-ui/react';
 
 export default function Blog() {
 	const [blog, setBlog] = useState();
@@ -22,19 +22,22 @@ export default function Blog() {
 	}, [id, showToast]);
 
 	return (
-		<div>
+		<Flex direction="column" mb={5}>
 			{blog && (
 				<Flex direction="column">
 					<Heading>{blog?.title}</Heading>
 					<Text mt={5} opacity="0.8" fontSize="xl">{moment(parseInt(blog?.createdAt)).fromNow()}</Text>
 					<Text fontSize="xl" opacity="0.5" mt={5}>{`${blog?.blog} ...`}</Text>
 					{author && (
-						<Link href={`/user/${author?.id}`} mt={5}>
-							<Text opacity="0.8" fontSize="xl">Written by {author?.name}</Text>
-						</Link>
+						<Flex mt={5} direction="column">
+							<Link href={`/user/${author?.id}`}>
+								<Text opacity="0.8" fontSize="xl">Written by {author?.name}</Text>
+							</Link>
+							<Button mt={5} width="100%" variant="outline">Delete Blog</Button>
+						</Flex>
 					)}
 				</Flex>
 			)}
-		</div>
+		</Flex>
 	)
 }
