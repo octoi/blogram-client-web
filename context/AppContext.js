@@ -6,7 +6,7 @@ export const AppStateContext = createContext();
 
 export function AppContext({ children }) {
 	const [user, setUser] = useState();
-	const [searchQuery, setSearchQuery] = useState();
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const userFromSession = getUser();
 	const toast = useToast();
