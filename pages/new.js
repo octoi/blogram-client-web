@@ -1,14 +1,34 @@
 import React, { useState } from 'react';
+import useAppContext from '../hooks/useAppContext';
 import AuthProtected from '../utils/AuthProtected';
-import { Flex, Heading, Input, Textarea, Button, Spinner } from '@chakra-ui/react';
+import PasswordPrompt from '../utils/PasswordPrompt';
+import { useRouter } from 'next/router';
+import { createBlog } from '../api/blog';
+import { Flex, Heading, Input, Textarea, Button, Spinner, useDisclosure } from '@chakra-ui/react';
 
 export default function New() {
 	const [title, setTitle] = useState('');
 	const [blog, setBlog] = useState('');
 	const [loading, setLoading] = useState(false);
 
-	const createNewBlog = () => {
+	const router = useRouter();
+
+	const { isOpen, onOpen, onClose } = useDisclosure()
+	const { user, showToast } = useAppContext();
+
+	const createNewBlog = (password) => {
+		if (password.length === 0) return;
 		setLoading(true);
+
+		const blogData = { username: user.username, password, title, blog }
+		createBlog(blogData).then(() => {
+			setLoading(false)
+			showToast({ title: 'Blog created successfully :)', isSuccess: true });
+			router.push('/');
+		}).catch(err => {
+			setLoading(false)
+			showToast({ title: err });
+		})
 	}
 
 	return (
@@ -31,12 +51,14 @@ export default function New() {
 					onChange={(e) => setBlog(e.target.value)}
 				/>
 				<Button
-					onClick={createNewBlog}
+					onClick={onOpen}
 					mt={5}
 					colorScheme="teal"
 					disabled={title.trim().length === 0 || blog.trim().length === 0 || loading}
 				>{loading ? <Spinner /> : 'Publish'}</Button>
 			</Flex>
+
+			<PasswordPrompt isOpen={isOpen} onClose={onClose} onConfirm={createNewBlog} />
 		</AuthProtected>
 	)
 }
