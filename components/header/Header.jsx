@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import useAppContext from '../../hooks/useAppContext';
+import { useRouter } from 'next/router';
 import { Flex, Text, Input, Button } from '@chakra-ui/react';
 import { InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 
 export default function Header() {
-
 	const { user, logout, searchQuery, setSearchQuery } = useAppContext();
+	const router = useRouter();
+
+	const isInputDisabled = router.pathname !== '/';
 
 	return (
 		<Flex mt={5} mb={10} justifyContent="space-between" alignItems="center" width="100%">
@@ -21,6 +24,7 @@ export default function Header() {
 				<Input
 					placeholder="Search for blogs ..."
 					variant="filled"
+					disabled={isInputDisabled}
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}
 				/>
