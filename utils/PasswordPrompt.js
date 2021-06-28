@@ -10,12 +10,14 @@ import {
 	Input
 } from "@chakra-ui/react"
 
-export default function PasswordPrompt({ isOpen, onClose, setValue }) {
+export default function PasswordPrompt({ isOpen, onClose, onConfirm }) {
 	const [password, setPassword] = useState('');
 	const cancelRef = useRef();
 
 	const handleBtnPress = () => {
-		setValue(password)
+		setPassword('')
+		onConfirm(password);
+		onClose();
 	}
 
 	return (
