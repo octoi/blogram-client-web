@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import useAppContext from '../../hooks/useAppContext';
-import AuthProtected from '../../utils/AuthProtected';
 import moment from 'moment';
+import AuthProtected from '../../utils/AuthProtected';
+import PasswordPrompt from '../../utils/PasswordPrompt';
 import { useRouter } from 'next/router';
 import { getUserData } from '../../api/user'
-import { fetchOneBlog } from '../../api/blog';
-import { Flex, Heading, Text, Link, Button } from '@chakra-ui/react';
+import { fetchOneBlog, deleteBlog } from '../../api/blog';
+import { Flex, Heading, Text, Link, Button, useDisclosure } from '@chakra-ui/react';
 
 export default function Blog() {
 	const [blog, setBlog] = useState();
@@ -14,6 +15,7 @@ export default function Blog() {
 
 	const { id } = router.query;
 	const { user, showToast } = useAppContext();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	useEffect(() => {
 		fetchOneBlog(id).then(blog => {
@@ -21,6 +23,17 @@ export default function Blog() {
 			getUserData(blog?.user).then((userData) => setAuthor(userData));
 		}).catch(err => showToast({ title: err }))
 	}, [id, showToast]);
+
+	const deleteCurrentBlog = (password) => {
+		const userData = { username: user?.username, password }
+
+		deleteBlog(userData, id).then(() => {
+			showToast({ title: 'Blog deleted successfully :)' });
+			router.push('/')
+		}).catch(err => {
+			showToast({ title: err })
+		})
+	}
 
 	return (
 		<AuthProtected>
@@ -39,12 +52,14 @@ export default function Blog() {
 									mt={5}
 									width="100%"
 									variant="outline"
+									onClick={onOpen}
 								>Delete Blog</Button>}
 							</Flex>
 						)}
 					</Flex>
 				)}
 			</Flex>
+			<PasswordPrompt isOpen={isOpen} onClose={onClose} onConfirm={deleteCurrentBlog} />
 		</AuthProtected>
 	)
 }
