@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as JsSearch from 'js-search';
 import useAppContext from '../../hooks/useAppContext';
 import Blog from './Blog';
+import { Flex } from '@chakra-ui/react';
 
 export default function Blogs({ blogs }) {
 	const [displayBlogs, setDisplayBlogs] = useState(blogs);
@@ -12,7 +13,7 @@ export default function Blogs({ blogs }) {
 
 		search.addIndex('title');
 		search.addIndex('blog');
-		search.addDocuments(blogs ? blogs : []);
+		search.addDocuments(blogs ? blogs.reverse() : []);
 
 		if (searchQuery.trim().length === 0) setDisplayBlogs(blogs);
 		else {
@@ -22,8 +23,8 @@ export default function Blogs({ blogs }) {
 	}, [searchQuery, blogs]);
 
 	return (
-		<div>
+		<Flex mb={10} direction="column">
 			{displayBlogs && displayBlogs.map(blog => <Blog key={blog?._id} blog={blog} />)}
-		</div>
+		</Flex>
 	)
 }
