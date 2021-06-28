@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import useAppContext from '../hooks/useAppContext';
-import Blog from '../components/home/Blog';
 import { fetchAllBlogs } from '../api/blog';
+import useAppContext from '../hooks/useAppContext';
+import Blogs from '../components/home/Blogs';
 
 export default function Home() {
 	const [blogs, setBlogs] = useState();
@@ -17,7 +17,7 @@ export default function Home() {
 
 	return (
 		<div>
-			{blogs && blogs.map(blog => <Blog key={blog?.id} blog={blog} />)}
+			<Blogs blogs={blogs} />
 		</div>
 	)
 }
