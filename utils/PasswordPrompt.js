@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react"
 
 export default function PasswordPrompt({ isOpen, onClose, onConfirm }) {
-	const [password, setPassword] = useState('');
+	const [value, setValue] = useState('');
 	const cancelRef = useRef();
 
 	const handleBtnPress = () => {
-		setPassword('')
-		onConfirm(password);
+		setValue('')
+		onConfirm(value);
 		onClose();
 	}
 
@@ -34,13 +34,13 @@ export default function PasswordPrompt({ isOpen, onClose, onConfirm }) {
 						<Input
 							placeholder="••••••••"
 							type="password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							value={value}
+							onChange={(e) => setValue(e.target.value)}
 						/>
 					</AlertDialogBody>
 					<AlertDialogFooter>
 						<Button ref={cancelRef} onClick={onClose}>Cancel</Button>
-						<Button colorScheme="teal" disabled={password.length === 0} onClick={handleBtnPress} ml={3}>Confirm</Button>
+						<Button colorScheme="teal" disabled={value.length === 0} onClick={handleBtnPress} ml={3}>Confirm</Button>
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialogOverlay>
