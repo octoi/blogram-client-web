@@ -27,7 +27,7 @@ export default function AuthProtected({ children }) {
 				setLoading(false);
 			}
 			checkForUser();
-		}, 3000)
+		}, 1000)
 	}, [children, user, router, showToast, count])
 
 	return (
