@@ -22,7 +22,7 @@ export default function Blog({ blog }) {
 		<HomeBlogContainer mt={4} onClick={() => router.push(`/blog/${blog?._id}`)} borderRadius="12" p={7}>
 			<Text fontSize="3xl" fontWeight="medium">{blog?.title}</Text>
 			<Text mt={2} opacity="0.8" fontSize="xl">{moment(parseInt(blog?.createdAt)).fromNow()}</Text>
-			<Text fontSize="xl" opacity="0.5" mt={3}>{`${blog?.blog.substr(1, 200)} ...`}</Text>
+			<Text fontSize="xl" opacity="0.5" mt={3}>{`${blog?.blog.substr(0, 200)} ...`}</Text>
 			{blogUser && (
 				<Link href={`/user/${blogUser?.id}`}>
 					<Text mt={3} opacity="0.8" fontSize="xl">{`written by ${blogUser?.name}`}</Text>
