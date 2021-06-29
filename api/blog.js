@@ -55,7 +55,7 @@ export function deleteBlog(userData, id) {
 			const data = res.data;
 
 			if (data?.status === 200) { resolve(data?.message) }
-			else { reject(data?.message); }
+			else { reject(data?.message?.message); }
 
 		}).catch(() => reject("Failed to delete blog"))
 	});

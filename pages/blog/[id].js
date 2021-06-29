@@ -34,7 +34,7 @@ export default function Blog() {
 			router.push('/')
 		}).catch(err => {
 			setLoading(false);
-			showToast({ title: err?.message })
+			showToast({ title: err })
 		})
 	}
 
