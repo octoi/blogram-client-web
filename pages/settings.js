@@ -9,14 +9,32 @@ import { useDisclosure, Flex, Heading, Button, Input } from '@chakra-ui/react';
 export default function Settings() {
 	const router = useRouter();
 	const { onOpen, isOpen, onClose } = useDisclosure();
-	const { user, showToast } = useAppContext();
+	const { user, setUser, showToast } = useAppContext();
 
 	const [newUsername, setNewUsername] = useState(user?.username ? user?.username : '');
 	const [newName, setNewName] = useState(user?.name ? user?.name : '');
 	const [newPassword, setNewPassword] = useState('');
 
-	const checkPassword = (password) => {
+	const update = (userData) => {
+		updateUser(userData).then(userData => {
+			setUser(userData);
+			showToast({ title: "Updated", isSuccess: true });
+			router.push('/');
+		}).catch(err => {
+			showToast({ title: err });
+		})
+	}
 
+	const checkPassword = (password) => {
+		const userData = {
+			username: user?.username,
+			name: user?.name,
+			password,
+			newUsername: newUsername,
+			newName: newName,
+			newPassword: newPassword === '' ? password : newPassword,
+		}
+		update(userData);
 	}
 
 	return (
