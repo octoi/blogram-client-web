@@ -31,7 +31,7 @@ export default function User() {
 					)}
 				</Flex>
 			)}
-			<Text mt={10} fontSize="xl">All Blogs</Text>
+			{blogs.length !== 0 && <Text mt={10} fontSize="xl">All Blogs</Text>}
 			{blogs.map(blog => <Blog key={blog?._id} blog={blog} />)}
 		</AuthProtected>
 	)
