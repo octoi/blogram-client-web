@@ -28,3 +28,16 @@ export function getUserBlogs(userId) {
 		}).catch(err => reject("Failed to get blogs"));
 	});
 }
+
+export function updateUser(userData) {
+	return new Promise((resolve, reject) => {
+		axios.put(`${userRoute}/update`, userData).then(res => {
+			const data = res.data;
+			if (data?.status === 200) {
+				resolve(data?.message)
+			} else {
+				reject(data?.message);
+			}
+		}).catch(() => reject("Couldn't request to server !"));
+	});
+}
