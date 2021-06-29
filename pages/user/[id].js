@@ -27,7 +27,7 @@ export default function User() {
 					<Text fontSize="5xl">{targetUser.name}</Text>
 					<Text fontSize="xl" opacity="0.8">@{targetUser.username}</Text>
 					{user?.username === targetUser?.username && (
-						<Button mt={4} colorScheme="teal">Edit Profile</Button>
+						<Button onClick={() => router.push('/settings')} mt={4} colorScheme="teal">Edit Profile</Button>
 					)}
 				</Flex>
 			)}
