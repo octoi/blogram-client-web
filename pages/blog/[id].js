@@ -6,11 +6,12 @@ import PasswordPrompt from '../../utils/PasswordPrompt';
 import { useRouter } from 'next/router';
 import { getUserData } from '../../api/user'
 import { fetchOneBlog, deleteBlog } from '../../api/blog';
-import { Flex, Heading, Text, Link, Button, useDisclosure } from '@chakra-ui/react';
+import { Flex, Heading, Text, Link, Button, useDisclosure, Spinner } from '@chakra-ui/react';
 
 export default function Blog() {
 	const [blog, setBlog] = useState();
-	const [author, setAuthor] = useState()
+	const [author, setAuthor] = useState();
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	const { id } = router.query;
@@ -26,11 +27,13 @@ export default function Blog() {
 
 	const deleteCurrentBlog = (password) => {
 		const userData = { username: user?.username, password }
+		setLoading(true);
 
 		deleteBlog(userData, id).then(() => {
-			showToast({ title: 'Blog deleted successfully :)' });
+			showToast({ title: 'Blog deleted successfully :)', isSuccess: true });
 			router.push('/')
 		}).catch(err => {
+			setLoading(false);
 			showToast({ title: err })
 		})
 	}
@@ -53,7 +56,8 @@ export default function Blog() {
 									width="100%"
 									variant="outline"
 									onClick={onOpen}
-								>Delete Blog</Button>}
+									disabled={loading}
+								>{loading ? <Spinner /> : "Delete Blog"}</Button>}
 							</Flex>
 						)}
 					</Flex>

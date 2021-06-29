@@ -15,3 +15,16 @@ export function getUserData(userId) {
 		});
 	});
 }
+
+export function getUserBlogs(userId) {
+	return new Promise((resolve, reject) => {
+		axios.get(`${serverUrl}/blog/user/${userId}`).then(res => {
+			const data = res?.data;
+			if (data?.status === 200) {
+				resolve(data?.message);
+			} else {
+				reject(data?.message);
+			}
+		}).catch(err => reject("Failed to get blogs"));
+	});
+}
